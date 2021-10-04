@@ -6,7 +6,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public string playerName; 
+
+
+    private HighScoreData highScore;
+    public string playerName;
+    public int currentHighScore;
+    public string currentHighScoreName;
+
    
     private void Awake()
     {
@@ -21,8 +27,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(Instance);
     }
 
+    private void Start()
+    {
+        highScore = new HighScoreData();
+    }
+
     // Update is called once per frame
     void Update()
     {
     }
+
+    public void SetRanking()
+    {
+
+    }
+   
 }
