@@ -25,6 +25,7 @@ public class MainManager : MonoBehaviour
     private bool m_GameOver = false;
 
     int firstRankerScore;
+    string firstRankerName;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +33,12 @@ public class MainManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             playerName = GameManager.Instance.playerName;
-            firstRankerScore = GameManager.Instance.currentHighScore;
+            firstRankerScore = GameManager.Instance.firstPosScore;
+            firstRankerName = GameManager.Instance.firstPosName;
+            highScoresText.text = $"HighSCore : {firstRankerName} : {firstRankerScore}";
         }
+
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -74,19 +79,25 @@ public class MainManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+               
+                
+                
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }
 
+  
+
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = $"{playerName} ,Score : {m_Points}";
         
         if (m_Points > firstRankerScore)
         {
             highScoresText.text = $"HighSCore : {playerName} : {m_Points}";
+            
         }
     }
 
@@ -94,13 +105,12 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-
-        if (GameManager.Instance != null) 
+        GameManager.Instance.ScoreToAddToHighScore.Add(new GameManager.ScoreToAdd { score = m_Points, name = playerName });
+        if(m_Points > firstRankerScore)
         {
-            
+            GameManager.Instance.firstPosScore = m_Points;
+            GameManager.Instance.firstPosName = playerName;            
         }
-         
-        
     }
 
     

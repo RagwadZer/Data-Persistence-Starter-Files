@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
-    private HighScoreData highScore;
+    public List<ScoreToAdd> ScoreToAddToHighScore;
     public string playerName;
-    public int currentHighScore;
-    public string currentHighScoreName;
+    //1er place player
+    public int firstPosScore;
+    public string firstPosName;
 
    
     private void Awake()
@@ -24,12 +23,16 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        ScoreToAddToHighScore = new List<ScoreToAdd>();
         DontDestroyOnLoad(Instance);
+        
     }
+
 
     private void Start()
     {
-        highScore = new HighScoreData();
+        
     }
 
     // Update is called once per frame
@@ -37,9 +40,9 @@ public class GameManager : MonoBehaviour
     {
     }
 
-    public void SetRanking()
+    public class ScoreToAdd
     {
-
+        public int score;
+        public string name;
     }
-   
 }
